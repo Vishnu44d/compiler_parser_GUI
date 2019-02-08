@@ -1,0 +1,95 @@
+<html>
+
+<head>
+<meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="shortcut icon" type="image/png" href="css/favicon.png"/>
+<meta name="theme-color" content="#000000" />
+<link rel="stylesheet" href="css/materialize.css">
+<link rel="stylesheet" href="css/style.css">
+
+
+
+
+
+<title>Compiler</title>
+
+</head>
+
+<body onload="brython({debug: 1, indexedDB: false})">
+    
+    <nav class="blue lighten-1">
+        <div class="nav-wrapper">
+        <a href="index.html" class="back"><img src="css/left-arrow.svg" height="40px" width="40px" style="height: 100%; padding: 10px;"></img></a>
+        <a href="#" class="brand-logo">Welcome to Compiler GUI</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="automata.html">Automata</a></li>
+            <li class="active"><a href="re2nfa.html">Re2NFA</a></li>
+            <li ><a href="parser.html">Parser</a></li>
+        </ul>
+        </div>
+    </nav>
+    <div class="container wrap-me">
+        <div id="content">
+            <div id="zone0">
+                <br/><br/>
+                <input id="prod" type="text" placeholder="Enter the Regular Expression">
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="getProd" name="action">Submit</button>
+            </div>
+            <br/>
+            
+        </div>
+    </div>
+    <div id="ab" class="container">
+        <h4>Instructions:-</h4>
+        <hr class="blue lighten-5 line"/>
+        <p>
+            <blockquote>
+                <i><strong>Step1:</strong></i> Comming soon....
+            </blockquote>
+            
+            The Github repos is:<br/> <a href="https://github.com/Vishnu44d/compiler_parser_GUI"> https://github.com/Vishnu44d/compiler_parser_GUI</a>
+            <div class="leave-me"></div>
+        </p>
+    </div>
+
+    <script type="text/python" id="script0">
+        from browser import document, alert
+        from browser import html
+        from browser.html import TABLE, TR, TH, TD
+        from parsing_table import driver, find_ter_and_non_ter
+
+
+
+
+    </script>
+
+
+<button type="button" class="btn-floating btn-small waves-effect waves-light red lighten-1 rel" onClick="refreshPage()"><img src="css/refresh.svg" width="60%"></button>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script>
+function refreshPage(){
+    window.location.reload();
+} 
+
+
+</script>
+<div class="container foot">
+<div class="cont">
+    © 2019 vishnu deo
+</div>
+</div>
+            
+
+<script src="js/brython.js"></script>
+<script src="js/brython_stdlib.js"></script>
+</body>
+</html>

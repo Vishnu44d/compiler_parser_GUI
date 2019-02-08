@@ -62,3 +62,13 @@ main {
   padding-top: 10%;
   line-height: 40px;
 }
+
+.note {
+  font-size: 0.7em;
+}
+.leave-me {
+  margin-bottom: 50px;
+}
+.lg {
+  margin-left: 40px;
+}
