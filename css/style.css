@@ -48,3 +48,6 @@ main {
 #ab {
   display: inline;
 }
+.line {
+  opacity: 0.2;
+}

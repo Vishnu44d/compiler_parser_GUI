@@ -41,11 +41,11 @@
     </div>
     <div id="ab" class="container">
         <h3>About</h3>
-        <hr/>
+        <hr class="blue lighten-5 line"/>
         <p>
             This GUI is build by vishnu Deo. To get the LL(1) parser table, First and Follow set.
             I will be keep on adding new feature here.
-            
+
         </p>
     </div>
 
@@ -116,11 +116,11 @@
             row <= TH("Non Terminals")
             row <= TH("Follow Set")
             table <= row
-            #print(follow)
+            print(follow)
             for t in follow:
                 row = TR()
                 ss = ""
-                for j in first[t]:
+                for j in follow[t]:
                     ss += "  "+j
                 row <= TD(t)+TD(ss)
                 table <= row
