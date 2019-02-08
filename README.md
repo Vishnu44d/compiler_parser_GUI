@@ -20,12 +20,18 @@
   python -m venv environment && .\Scripts\activate
   ```
 
+  then
+
+```bash
+cd environment
+```
+
 - #### Step 2
 
   Clone this repo
 
   ```bash
-  git clone https://github.com/Vishnu44d/compiler_parser_GUI && cd environment
+  git clone https://github.com/Vishnu44d/compiler_parser_GUI && cd compiler_parser_GUI
   ```
 
 - #### Step 3
