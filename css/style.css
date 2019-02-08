@@ -51,3 +51,14 @@ main {
 .line {
   opacity: 0.2;
 }
+.back {
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.content {
+  padding-top: 10%;
+  line-height: 40px;
+}
