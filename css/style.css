@@ -24,11 +24,12 @@ body {
   min-height: 100vh;
   flex-direction: column;
 }
+
 main {
   flex: 1 0 auto;
 }
 
-.foot {
+.container-foot {
   height: 5%;
   width: 100%;
   position: fixed;
@@ -47,6 +48,13 @@ main {
 }
 #ab {
   display: inline;
+  font-size: 1.2em;
+}
+.inst-pars {
+  margin-top: -30px;
+}
+.ab-home {
+  margin-top: 6%;
 }
 .line {
   opacity: 0.2;
@@ -71,4 +79,8 @@ main {
 }
 .lg {
   margin-left: 40px;
+}
+
+#nav-mobile {
+  font-size: 2em;
 }
