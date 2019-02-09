@@ -17,13 +17,13 @@
   or
 
   ```bash
-  python -m venv environment && .\Scripts\activate
+  python -m virtualenv environment && cd environment
   ```
 
   then
 
 ```bash
-cd environment
+.\Scripts\activate
 ```
 
 - #### Step 2
@@ -43,7 +43,7 @@ cd environment
 
   - running the server
     ```bash
-      python -m brython --server --port 8081
+      python -m brython --server --port 8090
     ```
 
 - #### Step 5
