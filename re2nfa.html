@@ -37,7 +37,7 @@
             <div id="zone0">
                 <br/><br/>
                 <input id="prod" type="text" placeholder="Enter the Regular Expression">
-                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="getProd" name="action">Submit</button>
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="getRe" name="action">Submit</button>
             </div>
             <br/>
             
@@ -51,7 +51,7 @@
                 <i><strong>Step1:</strong></i> Comming soon....
             </blockquote>
             
-            The Github repos is:<br/> <a href="https://github.com/Vishnu44d/compiler_parser_GUI"> https://github.com/Vishnu44d/compiler_parser_GUI</a>
+            The Github repo is:<br/> <a href="https://github.com/Vishnu44d/compiler_parser_GUI"> https://github.com/Vishnu44d/compiler_parser_GUI</a>
             <div class="leave-me"></div>
         </p>
     </div>
@@ -62,8 +62,10 @@
         from browser.html import TABLE, TR, TH, TD
         from parsing_table import driver, find_ter_and_non_ter
 
-
-
+        def handleSubmit(e):
+            alert("The work is in progress, will be updated soon")
+        btn = document["getRe"]
+        btn.bind("click", handleSubmit)
 
     </script>
 
