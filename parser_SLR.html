@@ -1,0 +1,237 @@
+<html>
+
+<head>
+<meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="shortcut icon" type="image/png" href="css/favicon.png"/>
+<meta name="theme-color" content="#000000" />
+<link rel="stylesheet" href="css/materialize.css">
+<link rel="stylesheet" href="css/style.css">
+
+
+
+
+
+<title>Compiler</title>
+
+</head>
+
+<body onload="brython({debug: 1, indexedDB: false})">
+    
+    <nav class="blue lighten-1">
+        <div class="nav-wrapper">
+        <a href="#" class="brand-logo  lg">Welcome to Compiler GUI</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="automata.html">Automata</a></li>
+            <li><a href="re2nfa.html">Re2NFA</a></li>
+            <li class="active"><a href="parser.html">Parser</a></li>
+        </ul>
+        </div>
+    </nav>
+    <div class="container wrap-me">
+        <div id="content">
+            <div id="zone0">
+                <br/><br/>
+                <input id="prod" type="text" placeholder="Enter the number of production rule">
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="getProd" name="action">Submit</button>
+            </div>
+            <br/>
+            <div class="hide-me" style="display: none;" id="btns">
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="first" name="action">first</button>
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="follow" name="action">follow</button>
+                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="tab" name="action">tab</button>
+            </div>
+            <div class="leave-me"></div>
+        </div>
+    </div>
+    <div id="ab" class="container inst-pars">
+        <h4>Instructions:-</h4>
+        <hr class="blue lighten-5 line"/>
+        <p>
+            <blockquote>
+                <i><strong>Step1:</strong></i> Fill the number of Production Rule, you would be needing.
+            </blockquote>
+            <blockquote>
+                <i><strong>Step2:</strong></i> Fill the starting symbol.
+            </blockquote>
+            <blockquote>
+                <i><strong>Step3:</strong></i> Fill all the grammer rules. <i>e.g. "A->B"</i>.
+            </blockquote>
+            <blockquote>
+                <i><strong>Result:</strong></i> You can get the First sets, Follow sets and <i>ll(1)</i> Parser table (<i>Click on "Tab" button</i>)
+            </blockquote>
+            <blockquote class="note">
+                <i><strong>Note:</strong> Don't leave any field blank. You can refresh the page and go back to original input by clickink that red button in right bottom corner.
+            </blockquote>
+            
+            The Github repo is:<br/> <a href="https://github.com/Vishnu44d/compiler_parser_GUI"> https://github.com/Vishnu44d/compiler_parser_GUI</a>
+            <div class="leave-me"></div>
+        </p>
+    </div>
+
+    <script type="text/python" id="script0">
+        from browser import document, alert
+        from browser import html
+        from browser.html import TABLE, TR, TH, TD
+        from parsing_table import driver, find_ter_and_non_ter
+
+
+
+
+
+        global d
+        global grg
+        global start
+        global isset
+        isset = False
+
+
+        def getData():
+            res = []
+            st = document["start"].value
+            for i in range(int(d)):
+                res.append(document["grammer"+str(i+1)].value)
+            #print(res, st)
+            grg=res
+            global start
+            global isset
+            start = st
+            isset = True
+            return res, st
+        
+        def handleFirst(ev):
+            # alert("First Clicked!!")
+            global isset
+            if isset:
+                global gr
+                global start
+            else:
+                gr, start = getData()
+            # print(gr, start)
+            document['zone0'].clear()
+            first, follow, parse_table = driver(gr, start)
+            table = TABLE()
+            row = TR() # create a row
+            row <= TH("Non Terminals")
+            row <= TH("First Set")
+            table <= row # add the row to the table
+            for t in first:
+                row = TR()
+                #nm = TD(t)
+                ss = ""
+                for j in first[t]:
+                    ss += "  "+j
+                row <= TD(t)+TD(ss)
+                table <= row
+            document['zone0'] <= table
+        
+        def handleFollow(ev):
+            # alert("First Clicked!!")
+            global isset
+            if isset:
+                global gr
+                global start
+            else:
+                gr, start = getData()
+            document['zone0'].clear()
+            #print("gr ", gr, "\nstar: ",start)
+            first, follow, parse_table = driver(gr, start)
+            table = TABLE()
+            row = TR() 
+            row <= TH("Non Terminals")
+            row <= TH("Follow Set")
+            table <= row
+            print(follow)
+            for t in follow:
+                row = TR()
+                ss = ""
+                for j in follow[t]:
+                    ss += "  "+j
+                row <= TD(t)+TD(ss)
+                table <= row
+            document['zone0'] <= table
+
+        def handleTable(e):
+            
+            # alert("First Clicked!!")
+            global isset
+            if isset:
+                global gr
+                global start
+            else:
+                gr, start = getData()
+            document['zone0'].clear()
+            first, follow, parse_table = driver(gr, start)
+            table = TABLE()
+            row = TR()
+            Ter, nonTer = find_ter_and_non_ter(gr)
+            row <= TH("Non Terminals")
+            for i in Ter | "$":
+                row <= TH(i)
+            table <= row
+
+            for t in parse_table:
+                row = TR()
+                elt = TD(t)
+                for i in Ter | "$":
+                    elt = elt+TD(parse_table[t][i])
+                row <= elt
+                table <= row
+            document['zone0'] <= table
+
+
+        def handleSubmit(e): 
+            global d
+            d = document['prod'].value
+            document['zone0'].clear()
+            ii = html.H1("Enter the Rules for Grammer", Class="center")
+            ii += html.INPUT(type="text", id="start", placeholder="start symbol")
+            for i in range(int(d)):
+                ii += html.INPUT(type="text",id="grammer"+str(i+1), placeholder="grammer"+str(i+1))
+            
+            document['zone0'].clear()
+            document['zone0'] <= ii
+            document['btns'].style.display = "inline" if document['btns'].style.display == "none" else "none"
+            document['ab'].style.display = "inline" if document['btns'].style.display == "none" else "none"
+        first_btn = document["first"]
+        follow_btn = document["follow"]
+        tab_btn = document["tab"]
+        btn = document["getProd"]
+        btn.bind("click", handleSubmit)
+        first_btn.bind("click", handleFirst)
+        follow_btn.bind("click", handleFollow)
+        tab_btn.bind("click", handleTable)
+
+
+    </script>
+
+
+<button type="button" class="btn-floating btn-small waves-effect waves-light red lighten-1 rel" onClick="refreshPage()"><img src="css/refresh.svg" width="60%"></button>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script>
+function refreshPage(){
+    window.location.reload();
+} 
+
+
+</script>
+<div class="container-foot">
+<div class="cont">
+    © 2019 vishnu deo
+</div>
+</div>
+            
+
+<script src="js/brython.js"></script>
+<script src="js/brython_stdlib.js"></script>
+</body>
+</html>
