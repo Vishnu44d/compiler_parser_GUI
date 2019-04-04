@@ -41,8 +41,6 @@
             </div>
             <br/>
             <div class="hide-me" style="display: none;" id="btns">
-                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="first" name="action">first</button>
-                <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="follow" name="action">follow</button>
                 <button class="btn waves-effect waves-light blue lighten-1" type="submit" id="tab" name="action">tab</button>
             </div>
             <div class="leave-me"></div>
@@ -60,7 +58,7 @@
             </blockquote>
             <blockquote>
                 <i><strong>Step3:</strong></i> Fill all the grammer rules. <i>e.g. "A->B"</i>.
-            </blockquote>
+            </blockquote>set(Ter) | set(["$"]) | set(nonTer)
             <blockquote>
                 <i><strong>Result:</strong></i> You can get the First sets, Follow sets and <i>ll(1)</i> Parser table (<i>Click on "Tab" button</i>)
             </blockquote>
@@ -77,7 +75,8 @@
         from browser import document, alert
         from browser import html
         from browser.html import TABLE, TR, TH, TD
-        from parsing_table import driver, find_ter_and_non_ter
+        #from parsing_table import driver, find_ter_and_non_ter
+        from SLR import drive_me
 
 
 
@@ -92,92 +91,43 @@
 
         def getData():
             res = []
-            st = document["start"].value
+            #st = document["start"].value
             for i in range(int(d)):
                 res.append(document["grammer"+str(i+1)].value)
             #print(res, st)
             grg=res
-            global start
+            #global start
             global isset
-            start = st
+            #start = st
             isset = True
-            return res, st
+            return res
         
-        def handleFirst(ev):
-            # alert("First Clicked!!")
-            global isset
-            if isset:
-                global gr
-                global start
-            else:
-                gr, start = getData()
-            # print(gr, start)
-            document['zone0'].clear()
-            first, follow, parse_table = driver(gr, start)
-            table = TABLE()
-            row = TR() # create a row
-            row <= TH("Non Terminals")
-            row <= TH("First Set")
-            table <= row # add the row to the table
-            for t in first:
-                row = TR()
-                #nm = TD(t)
-                ss = ""
-                for j in first[t]:
-                    ss += "  "+j
-                row <= TD(t)+TD(ss)
-                table <= row
-            document['zone0'] <= table
-        
-        def handleFollow(ev):
-            # alert("First Clicked!!")
-            global isset
-            if isset:
-                global gr
-                global start
-            else:
-                gr, start = getData()
-            document['zone0'].clear()
-            #print("gr ", gr, "\nstar: ",start)
-            first, follow, parse_table = driver(gr, start)
-            table = TABLE()
-            row = TR() 
-            row <= TH("Non Terminals")
-            row <= TH("Follow Set")
-            table <= row
-            print(follow)
-            for t in follow:
-                row = TR()
-                ss = ""
-                for j in follow[t]:
-                    ss += "  "+j
-                row <= TD(t)+TD(ss)
-                table <= row
-            document['zone0'] <= table
-
         def handleTable(e):
             
             # alert("First Clicked!!")
             global isset
             if isset:
                 global gr
-                global start
+                #global start
             else:
-                gr, start = getData()
+                gr = getData()
             document['zone0'].clear()
-            first, follow, parse_table = driver(gr, start)
+            print(gr)
+            parse_table, Ter, nonTer = drive_me(gr)
+
             table = TABLE()
             row = TR()
-            Ter, nonTer = find_ter_and_non_ter(gr)
-            row <= TH("Non Terminals")
-            for i in Ter | "$":
+            #Ter, nonTer = find_ter_and_non_ter(gr)
+            print(Ter, nonTer)
+            row <= TH("States")
+            for i in set(Ter) | set(["$"]) | set(nonTer):
                 row <= TH(i)
             table <= row
 
             for t in parse_table:
                 row = TR()
                 elt = TD(t)
-                for i in Ter | "$":
+                for i in set(Ter) | set(["$"]) | set(nonTer):
                     elt = elt+TD(parse_table[t][i])
                 row <= elt
                 table <= row
@@ -189,7 +139,7 @@
             d = document['prod'].value
             document['zone0'].clear()
             ii = html.H1("Enter the Rules for Grammer", Class="center")
-            ii += html.INPUT(type="text", id="start", placeholder="start symbol")
+
             for i in range(int(d)):
                 ii += html.INPUT(type="text",id="grammer"+str(i+1), placeholder="grammer"+str(i+1))
             
@@ -197,13 +147,9 @@
             document['zone0'] <= ii
             document['btns'].style.display = "inline" if document['btns'].style.display == "none" else "none"
             document['ab'].style.display = "inline" if document['btns'].style.display == "none" else "none"
-        first_btn = document["first"]
-        follow_btn = document["follow"]
         tab_btn = document["tab"]
         btn = document["getProd"]
         btn.bind("click", handleSubmit)
-        first_btn.bind("click", handleFirst)
-        follow_btn.bind("click", handleFollow)
         tab_btn.bind("click", handleTable)
 
 
